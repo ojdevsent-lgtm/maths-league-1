@@ -2,15 +2,14 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
     match /submissions/{submissionId} {
-      allow create: if request.auth != null
+      allow create: if
         && request.resource.data.keys().hasAll(['name','studentId','studentKey','answers','score','percentage','submittedAt','uid'])
         && request.resource.data.studentKey == submissionId
         && request.resource.data.answers.size() == 10
         && request.resource.data.score >= 0
         && request.resource.data.score <= 10
         && request.resource.data.percentage == request.resource.data.score * 10;
-      allow read: if request.auth != null
-        && request.auth.token.email == "admin@mlgo-86f79.firebaseapp.com";
+      allow read: if false;
       allow update, delete: if false;
     }
   }
